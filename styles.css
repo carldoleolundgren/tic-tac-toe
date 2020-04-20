@@ -1,0 +1,30 @@
+body, button {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+}
+
+.start-btns {
+    display: inline-block;
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
+
+table {
+    display: inline-block;
+}
+
+td {
+    border: 1px solid black;
+    padding: 0px;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    font-size: 50px;
+}
