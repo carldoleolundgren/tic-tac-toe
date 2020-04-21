@@ -1,6 +1,8 @@
 const gameBoard = (() => {
     const boardCell = Array.from(document.querySelectorAll('td'));
     const resetBtn = document.querySelector('.reset-btn button');
+    const humanGameBtn = document.querySelector('#human-btn');
+    const AIGameBtn = document.querySelector('#AI-btn');
     let lastCharacterPlayed;
     let xPlays = [];
     let oPlays = [];
@@ -14,10 +16,10 @@ const gameBoard = (() => {
         [0,4,8], //top left to bottom right
         [2,4,6] // top right to bottom left
     ]; //length == 8
-    let xWins = false;
-    let oWins = false;
+    let gameStarted = false;
+    let gameWon = false;
     
-    function checkForWinner() {
+    function checkIfXWins() {
         if (xPlays.length < 3) {
           return;
         }
@@ -30,24 +32,36 @@ const gameBoard = (() => {
             }
           }
           if (win) {
-            console.log('win');
+            gameWon = true;
+            console.log('x wins')
             break;
           }
         }
     };
 
-    var arraysMatch = function (arr1, arr2) {
-    	if (arr1.length !== arr2.length) return false;
-        for (var i = 0; i < arr1.length; i++) {
-            if (arr1[i] !== arr2[i]) return false;
+    function checkIfOWins() {
+        if (oPlays.length < 3) {
+          return;
         }
-    	return true;
+        for (let i = 0; i < winningPlays.length; i++) {
+          let win = true;
+          for (let j = 0; j < winningPlays[i].length; j++) {
+            if (!oPlays.includes(winningPlays[i][j])) {
+              win = false;
+              break;
+            }
+          }
+          if (win) {
+            gameWon = true;
+            console.log('o wins')
+            break;
+          }
+        }
     };
-
 
     boardCell.forEach( (cell) => {
         cell.addEventListener('click', function() {
-            if (cell.innerText != '') {
+            if (cell.innerText != '' || gameWon || !gameStarted) {
                 return;
             } else if (lastCharacterPlayed == null || lastCharacterPlayed == 'O') {
                 cell.innerText = 'X'
@@ -60,7 +74,8 @@ const gameBoard = (() => {
                 oPlays.push(Number(cell.dataset.index));
                 oPlays.sort();
             }
-            checkForWinner();
+            checkIfXWins();
+            checkIfOWins();
         })
     })
 
@@ -70,10 +85,39 @@ const gameBoard = (() => {
         })
         xPlays = [];
         oPlays = [];
+        gameWon = false;
         lastCharacterPlayed = null;
+        gameStarted = false;
+
+        document.querySelector('.start-btns').classList.remove('hidden');
+        document.querySelector('.multiplayer-game-input').classList.add('hidden');
+        document.querySelector('.AI-game-input').classList.add('hidden');
+
     })
 
-    function evaluateWinner() {
+    humanGameBtn.addEventListener('click', () => {
+        document.querySelector('.start-btns').classList.add('hidden');
+        document.querySelector('.multiplayer-game-input').classList.remove('hidden');
 
-    }
+        startGame();
+    })
+
+    AIGameBtn.addEventListener('click', () => {
+        document.querySelector('.start-btns').classList.add('hidden');
+        document.querySelector('.AI-game-input').classList.remove('hidden');
+
+        startGame();
+    })
+
+    const startGame = function () {
+        const startGameBtn = document.querySelector('.start-game')
+        startGameBtn.addEventListener('click', () => {
+            document.querySelector('.start-btns').classList.add('hidden');
+            document.querySelector('.multiplayer-game-input').classList.add('hidden');
+            document.querySelector('.AI-game-input').classList.add('hidden');
+            gameStarted = true;
+        })
+        
+    };
+
 })();

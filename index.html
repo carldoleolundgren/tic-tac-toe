@@ -10,8 +10,19 @@
     <h1>Tic Tac Toe</h1>
     <div class="container">
         <div class="start-btns"> 
-            <button>Start Multiplayer Game</button>
-            <button>Start Game Against AI</button>
+            <button id="human-btn">Start Multiplayer Game</button>
+            <button id="AI-btn">Start Game Against AI</button>
+        </div>
+        <div class="multiplayer-game-input hidden">
+            <input placeholder="Player 1 Name">
+            <input placeholder="Player 2 Name">
+            <br>
+            <button class="start-game">Start</button>
+        </div>
+        <div class="AI-game-input hidden">
+            <input placeholder="Player Name">
+            <br>
+            <button class="start-game">Start</button>
         </div>
         <br> 
         <table>
